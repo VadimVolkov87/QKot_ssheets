@@ -31,16 +31,16 @@ class CRUDCharityProject(CRUDBase):
         """Метод получения выборки проектов по скорости закрытия."""
         finishing_projects_duration = await session.execute(select(
             CharityProject.name, CharityProject.description, (extract(
-             'epoch',
+                'epoch',
              CharityProject.close_date) - extract(
                 'epoch', CharityProject.create_date
-             )).label('collection_time')
+                )).label('collection_time')
         ).where(CharityProject.fully_invested == 1).order_by(
-         extract(
+            extract(
              'epoch',
              CharityProject.close_date) - extract(
                  'epoch', CharityProject.create_date
-                 ),)
+            ),)
         )
         return finishing_projects_duration.all()
 

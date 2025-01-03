@@ -29,7 +29,7 @@ async def get_report(
     """Получение отчета о завершенных проектах, только для суперюзеров."""
     collection_times = (
         await charity_project_crud.get_projects_by_completion_rate(
-         session
+            session
         ))
     spreadsheetid = await spreadsheets_create(wrapper_services)
     await set_user_permissions(spreadsheetid, wrapper_services)
