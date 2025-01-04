@@ -9,7 +9,7 @@ class Settings(BaseSettings):
 
     app_title: str = 'Благотворительный фонд поддержки котиков.'
     description: str = 'Для сбора пожертвований на проекты для котиков.'
-    database_url: str = 'sqlite+aiosqlite:///./fastapi.db'
+    database_url: str = 'sqlite+aiosqlite:///./cat_charity_fund.db'
     secret: str = 'SECRET'
     first_superuser_email: Optional[EmailStr] = None
     first_superuser_password: Optional[str] = None
