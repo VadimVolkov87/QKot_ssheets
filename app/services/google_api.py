@@ -15,25 +15,25 @@ now_date_time = datetime.now().strftime(FORMAT)
 ROW_COUNT = 100
 COLUMN_COUNT = 11
 SPREADSHEET_BODY = dict(
-        properties=dict(
-            title=f'Отчёт от {now_date_time}',
-            locale='ru_RU'
-        ),
-        sheets=[dict(properties=dict(
-            sheetType='GRID',
-            sheetId=0,
-            title='Лист1',
-            gridProperties=dict(
-                rowCount=ROW_COUNT,
-                columnCount=COLUMN_COUNT
-            )
-        ))]
+    properties=dict(
+        title=f'Отчёт от {now_date_time}',
+        locale='ru_RU'
+    ),
+    sheets=[dict(properties=dict(
+        sheetType='GRID',
+        sheetId=0,
+        title='Лист1',
+        gridProperties=dict(
+            rowCount=ROW_COUNT,
+            columnCount=COLUMN_COUNT
+        )
+    ))]
 )
 TABLE_VALUES = [
-        ['Отчёт от', now_date_time],
-        ['Топ проектов по скорости закрытия'],
-        ['Название проекта', 'Время сбора', 'Описание']
-    ]
+    ['Отчёт от', now_date_time],
+    ['Топ проектов по скорости закрытия'],
+    ['Название проекта', 'Время сбора', 'Описание']
+]
 VALIDATION_ERROR = ('Количество записей превосходит допустимый размер '
                     f'{ROW_COUNT} х {COLUMN_COUNT}.')
 
@@ -79,8 +79,8 @@ async def spreadsheets_update_value(
             str(time['description'])] for time in collection_times],
     ]
     if len(table_values) > ROW_COUNT or len(
-         max(table_values, key=len)
-         ) > COLUMN_COUNT:
+        max(table_values, key=len)
+    ) > COLUMN_COUNT:
         raise HTTPException(
             status_code=HTTPStatus.UNPROCESSABLE_ENTITY,
             detail=VALIDATION_ERROR
