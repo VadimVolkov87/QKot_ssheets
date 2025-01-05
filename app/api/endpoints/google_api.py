@@ -1,6 +1,6 @@
 """Модуль роутера Google таблиц."""
 from aiogoogle import Aiogoogle
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.db import get_async_session
@@ -35,6 +35,6 @@ async def get_report(
     try:
         await spreadsheets_update_value(spreadsheet_id, collection_times,
                                         wrapper_services)
-    except HTTPException as error:
-        return error.detail, error.status_code
+    except OSError as error:
+        raise Exception(error)
     return spreadsheet_url
