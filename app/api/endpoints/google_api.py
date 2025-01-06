@@ -35,6 +35,6 @@ async def get_report(
     try:
         await spreadsheets_update_value(spreadsheet_id, collection_times,
                                         wrapper_services)
-    except OSError as error:
-        raise Exception(error)
+    except ValueError as error:
+        raise RuntimeError(error)
     return spreadsheet_url

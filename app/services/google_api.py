@@ -1,7 +1,6 @@
 """Модуль работы с Google API."""
 import copy
 from datetime import datetime, timedelta
-from http import HTTPStatus
 from typing import Union
 
 from aiogoogle import Aiogoogle
@@ -31,7 +30,7 @@ TABLE_VALUES = [
     ['Топ проектов по скорости закрытия'],
     ['Название проекта', 'Время сбора', 'Описание']
 ]
-VALIDATION_ERROR = ('Количество записей {}x{} превосходит допустимый размер '
+VALIDATION_ERROR = ('Размер таблицы {}x{} превосходит допустимый размер поля '
                     f'{ROW_COUNT}х{COLUMN_COUNT}.')
 
 
@@ -82,9 +81,9 @@ async def spreadsheets_update_value(
     table_rows = len(table_values)
     table_columns = len(max(table_values, key=len))
     if table_rows > ROW_COUNT or table_columns > COLUMN_COUNT:
-        raise OSError(
+        raise ValueError(
             VALIDATION_ERROR.format(
-                table_rows, table_columns, HTTPStatus.UNPROCESSABLE_ENTITY
+                table_rows, table_columns
             )
         )
     update_body = {
@@ -94,8 +93,7 @@ async def spreadsheets_update_value(
     await wrapper_services.as_service_account(
         service.spreadsheets.values.update(
             spreadsheetId=spreadsheetid,
-            range=(f'R1C1:R{table_rows}'
-                   f'C{table_columns}'),
+            range=(f'R1C1:R{table_rows}C{table_columns}'),
             valueInputOption='USER_ENTERED',
             json=update_body
         )
