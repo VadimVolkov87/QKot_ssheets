@@ -36,5 +36,5 @@ async def get_report(
         await spreadsheets_update_value(spreadsheet_id, collection_times,
                                         wrapper_services)
     except ValueError as error:
-        raise RuntimeError(error)
+        raise ValueError(error.args, 422)
     return spreadsheet_url
