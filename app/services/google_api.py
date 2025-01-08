@@ -80,7 +80,7 @@ async def spreadsheets_update_value(
     ]
     table_rows = len(table_values)
     table_columns = len(max(table_values, key=len))
-    if table_rows > ROW_COUNT or table_columns > COLUMN_COUNT:
+    if (table_rows > ROW_COUNT or table_columns > COLUMN_COUNT):
         raise ValueError(
             VALIDATION_ERROR.format(
                 table_rows, table_columns

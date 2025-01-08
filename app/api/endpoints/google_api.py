@@ -1,6 +1,6 @@
 """Модуль роутера Google таблиц."""
 from http import HTTPStatus
-from urllib.error import URLError
+from requests.exceptions import HTTPError
 
 from aiogoogle import Aiogoogle
 from fastapi import APIRouter, Depends
@@ -13,7 +13,7 @@ from app.crud.charity_projects import charity_project_crud
 from app.services.google_api import (set_user_permissions, spreadsheets_create,
                                      spreadsheets_update_value)
 
-ERROR_MESSAGE = 'В процесс запроса возникла ошибка {}'
+ERROR_MESSAGE = 'В процессе запроса возникла ошибка, {}'
 
 router = APIRouter()
 
@@ -41,8 +41,8 @@ async def get_report(
         await spreadsheets_update_value(spreadsheet_id, collection_times,
                                         wrapper_services)
     except ValueError as error:
-        raise URLError(
-            ERROR_MESSAGE.format(error.args),
-            f'{HTTPStatus.UNPROCESSABLE_ENTITY}'
+        raise HTTPError(
+            ERROR_MESSAGE.format(error),
+            f'{HTTPStatus.UNPROCESSABLE_ENTITY}',
         )
     return spreadsheet_url
